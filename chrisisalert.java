@@ -12,7 +12,7 @@ public class MarksFrame extends JFrame {
         setLayout(null); // Using absolute positioning
 
         // Adding first logo
-        ImageIcon logoIcon1 = new ImageIcon("C:/pp_prog/uni logo.png"); // Adjust path to your logo
+        ImageIcon logoIcon1 = new ImageIcon("C:/pp_prog/chrisislogo.png"); // Adjust path to your logo
         int logoWidth1 = 150;  // Adjust the width as needed
         int logoHeight1 = (int) (logoWidth1 * ((double) logoIcon1.getIconHeight() / logoIcon1.getIconWidth()));
         JLabel logoLabel1 = new JLabel(new ImageIcon(logoIcon1.getImage().getScaledInstance(logoWidth1, logoHeight1, Image.SCALE_SMOOTH)));
@@ -22,7 +22,7 @@ public class MarksFrame extends JFrame {
         add(logoLabel1);
 
         // Adding second logo
-        ImageIcon logoIcon2 = new ImageIcon("C:/pp_prog/chrisislogo.png"); // Adjust path to your second logo
+        ImageIcon logoIcon2 = new ImageIcon("C:/pp_prog/uni logo.png"); // Adjust path to your second logo
         int logoWidth2 = 150;  // Adjust the width as needed
         int logoHeight2 = (int) (logoWidth2 * ((double) logoIcon2.getIconHeight() / logoIcon2.getIconWidth()));
         JLabel logoLabel2 = new JLabel(new ImageIcon(logoIcon2.getImage().getScaledInstance(logoWidth2, logoHeight2, Image.SCALE_SMOOTH)));
