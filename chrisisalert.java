@@ -68,7 +68,7 @@ public class MarksFrame extends JFrame {
 
         // Adding submit button
         JButton submitButton = new JButton("Submit");
-        submitButton.setBounds(650, fieldPosY + subjects.length * 30 + 20, 80, 30); // Moved down after the entry of 6th subject
+        submitButton.setBounds(650, fieldPosY + subjects.length * 30 + 20, 120, 30); // Moved down after the entry of 6th subject
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
