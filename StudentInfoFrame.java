@@ -9,10 +9,10 @@ public class StudentInfoFrame extends JFrame {
     private JTextField classField;
 
     public StudentInfoFrame() {
-
         super("Student Information");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null); // Using absolute positioning
+        getContentPane().setBackground(new Color(190, 209, 207));
 
         // Adding first logo
         ImageIcon logoIcon1 = new ImageIcon("C:/pp_prog/ChrisisAlert.png"); // Adjust path to your logo
@@ -99,7 +99,7 @@ class MarksEntryFrame extends JFrame {
         this.name = name;
         this.rollNumber = rollNumber;
         this.className = className;
-
+        getContentPane().setBackground(new Color(190, 209, 207));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null); // Using absolute positioning
 
@@ -122,22 +122,22 @@ class MarksEntryFrame extends JFrame {
         int logo2PosY = logo1PosY + 40; // Place below the first logo with some spacing
         logoLabel2.setBounds(logo2PosX, logo2PosY, logoWidth2, logoHeight2);
         add(logoLabel2);
-	// Inside the constructor of MarksEntryFrame
-	JLabel nameLabel = new JLabel("Hi! " + name);
-	nameLabel.setBounds(20, logo1PosY + logoHeight1 + 20, 200, 20);
-	add(nameLabel);
+        // Inside the constructor of MarksEntryFrame
+        JLabel nameLabel = new JLabel("Hi! " + name);
+        nameLabel.setBounds(20, logo1PosY + logoHeight1 + 20, 200, 20);
+        add(nameLabel);
 
-	JLabel classRollLabel = new JLabel("Class: " + className + "     Reg Number: " + rollNumber);
-	classRollLabel.setBounds(20, logo1PosY + logoHeight1 + 50, 300, 20);
-	add(classRollLabel);
+        JLabel classRollLabel = new JLabel("Class: " + className + "     Reg Number: " + rollNumber);
+        classRollLabel.setBounds(20, logo1PosY + logoHeight1 + 50, 300, 20);
+        add(classRollLabel);
 
-        String[] labels = {"CIA1", "CIA2", "CIA3", "MIDSEM LAB", "END SEM LAB", "ATTENDANCE", "TARGET"};
+        String[] labels = {"CIA1", "CIA2", "CIA3", "MIDSEM LAB", "END SEM LAB", "ATTENDANCE", "CREDIT","TARGET"};
 
         textFields = new JTextField[6][labels.length]; // Assuming there are 6 subjects
         checkBoxes = new JCheckBox[6][labels.length]; // Assuming there are 6 subjects
 
         // Adding labels for each column
-        int labelPosY = Math.max(logo1PosY + logoHeight1, logo2PosY + logoHeight2+100) + 20;
+        int labelPosY = Math.max(logo1PosY + logoHeight1, logo2PosY + logoHeight2 + 100) + 20;
         for (int i = 0; i < labels.length; i++) {
             JLabel label = new JLabel(labels[i]);
             label.setBounds((i + 1) * 120, labelPosY, 100, 20);
@@ -149,6 +149,7 @@ class MarksEntryFrame extends JFrame {
         for (int i = 0; i < 6; i++) { // Assuming there are 6 subjects
             JTextField subjectTextField = new JTextField("Subject " + (i + 1)); // Default subject names
             subjectTextField.setBounds(5, fieldPosY + i * 30, 100, 20);
+		 subjectTextField.setEditable(false);
             add(subjectTextField);
 
             for (int j = 0; j < labels.length; j++) {
@@ -157,7 +158,7 @@ class MarksEntryFrame extends JFrame {
                 add(textFields[i][j]);
 
                 // Checkboxes are added only for marks fields (excluding target)
-                if (!labels[j].equals("TARGET")) {
+                if (!labels[j].equals("TARGET")&& !labels[j].equals("CREDIT")) {
                     checkBoxes[i][j] = new JCheckBox();
                     checkBoxes[i][j].setBounds((j + 1) * 120 + 55, fieldPosY + i * 30, 20, 20);
                     add(checkBoxes[i][j]);
@@ -170,30 +171,43 @@ class MarksEntryFrame extends JFrame {
         submitButton.setBounds(650, fieldPosY + 6 * 30 + 20, 120, 30); // Assuming there are 6 subjects
         submitButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                // Create a new frame for displaying submitted values
-                JFrame resultFrame = new JFrame("Submitted Values");
-                resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                resultFrame.setLayout(new BorderLayout());
+          public void actionPerformed(ActionEvent e) {
+    // Create a new frame for displaying submitted values
+    JFrame resultFrame = new JFrame("Submitted Values");
+    resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    resultFrame.setLayout(new BorderLayout());
 
-                // Create a table model
-                DefaultTableModel tableModel = new DefaultTableModel();
-                for (String label : labels) {
-                    tableModel.addColumn(label);
-                }
+    // Create a table model
+    DefaultTableModel tableModel = new DefaultTableModel();
+    tableModel.addColumn("Subject");
+    for (String label : labels) {
+        tableModel.addColumn(label);
+    }
 
-                // Populate table model with values
-                for (int i = 0; i < 6; i++) { // Assuming there are 6 subjects
-                    Object[] rowData = new Object[labels.length];
-                    for (int j = 0; j < labels.length; j++) {
-                        if (checkBoxes[i][j] != null && checkBoxes[i][j].isSelected()) {
-                            rowData[j] = textFields[i][j].getText();
-                        } else {
-                            rowData[j] = "";
-                        }
-                    }
-                    tableModel.addRow(rowData);
+    for (int i = 0; i < 6; i++) { // Assuming there are 6 subjects
+        Object[] rowData = new Object[labels.length + 1];
+        rowData[0] = "Subject " + (i + 1); // Subject names
+
+        for (int j = 0; j < labels.length; j++) {
+            if (labels[j].equals("TARGET") || labels[j].equals("CREDIT")) {
+                rowData[j + 1] = textFields[i][j].getText();
+            } else {
+                if (checkBoxes[i][j] != null && checkBoxes[i][j].isSelected()) {
+                    rowData[j + 1] = textFields[i][j].getText();
+                } else {
+                    rowData[j + 1] = "";
                 }
+            }
+        }
+        tableModel.addRow(rowData);
+    }
+
+    // Adding target value
+    resultFrame.add(new JScrollPane(new JTable(tableModel)));
+    resultFrame.pack();
+    resultFrame.setVisible(true);
+
+
 
                 // Create a JTable with the model
                 JTable table = new JTable(tableModel);
@@ -258,9 +272,9 @@ class MarksEntryFrame extends JFrame {
     private void toggleMode() {
         isDarkMode = !isDarkMode;
         if (isDarkMode) {
-            getContentPane().setBackground(Color.DARK_GRAY);
+            getContentPane().setBackground(new Color(10, 69, 62)); // Dark mode background color
         } else {
-            getContentPane().setBackground(new Color(245, 245, 220)); // Beige color
+            getContentPane().setBackground(new Color(190, 209, 207)); // Beige color
         }
     }
 
