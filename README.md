@@ -20,7 +20,7 @@ Ensure you have the following installed:
 1. Clone this repository or download the source code:  
    ```sh
    git clone https://github.com/IshitaSinghFaujdar/chrisis-alert.git
-   cd marks-calculator
+   
 
    for compiling: ```javac Main.java ```
    for running: ```java -cp ".;lib/mysql-connector-j-9.1.0.jar" Main```
