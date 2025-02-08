@@ -21,17 +21,24 @@ Ensure you have the following installed:
    ```sh
    git clone https://github.com/IshitaSinghFaujdar/chrisis-alert.git
    
-
+#on windows
    for compiling: ```javac Main.java ```
    for running: ```java -cp ".;lib/mysql-connector-j-9.1.0.jar" Main```
    There is a JAR file in library folder, ensure you have it with you.
 
-   Add a **db_config.properties** file and enter your credentials for mySQL like this.
-    db.url=jdbc:mysql://localhost:3306/chrisis_users
-    db.username=root
-    db.password=sample@1234
+   #on linux
+   ```
+   javac Main.java
+   java -cp ".:lib/mysql-connector-j-9.1.0.jar" Main
+```
 
-    Create a database in your MYSQL
+
+   Add a **db_config.properties** file and enter your credentials for mySQL like this.
+    ```db.url=jdbc:mysql://localhost:3306/chrisis_users
+       db.username=root
+       db.password=sample@1234```
+
+   Create a database in your MYSQL
     ```CREATE DATABASE chrisis_users```
     ```USE chrisis_users;```
     ```CREATE TABLE users (
