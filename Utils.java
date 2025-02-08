@@ -9,11 +9,12 @@ public class Utils {
             double totalCIA = cia1 + cia2 + cia3;
             scaledCIA = (totalCIA / 90) * 30;  
         } else if (credits == 3) {
-            
-            scaledCIA = 45;  
+            double totalCIA = cia1 + cia2 + cia3;
+            scaledCIA = (totalCIA / 90) *45;  
         } else if (credits == 2) {
-            
-            scaledCIA = 20;  
+
+            double totalCIA = cia1 + cia2 + cia3;
+            scaledCIA = (totalCIA / 90) *20;  
         }
 
         return scaledCIA;

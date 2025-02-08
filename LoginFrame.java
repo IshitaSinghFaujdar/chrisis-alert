@@ -1,9 +1,10 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class LoginFrame extends JFrame{
     
@@ -65,8 +66,46 @@ public class LoginFrame extends JFrame{
         this.add(submit);
         this.add(forgot);
         this.add(SignUp);
+        //Action Listener for Submit
+        submit.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                String userText = username.getText();
+                String passText = new String(password.getPassword());
         
+                if (validateLogin(userText, passText)) {
+                    JOptionPane.showMessageDialog(null, "Login Successful!");
+        
+                    // Open dashboard
+                    DashboardFrame dashboard = new DashboardFrame(userText);
+                    dashboard.setVisible(true) ;
+                    
+                    // Close the LoginFrame
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid Credentials!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
+            // ActionListener for Signup
+            SignUp.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new SignupFrame();
+                }
+            });
 
+            //ActionListener for forgot
+            forgot.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new ResetPassword(); 
+                }
+            });
+            
+
+        
         setTitle("Login/SignUp");
         setSize(700,700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,5 +114,25 @@ public class LoginFrame extends JFrame{
 
     }
 
+    private boolean validateLogin(String user,String pass){
+        Connection conn=DBConnection.getConnection();
+        String query="SELECT password FROM users WHERE username = ?";
 
+        try{
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setString(1,user);
+            ResultSet rs=stmt.executeQuery();
+            
+            if (rs.next()){
+                String storedPasswordHash = rs.getString("password");
+                String enteredPasswordHash = HashUtil.hashPassword(pass);
+                return storedPasswordHash.equals(enteredPasswordHash);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+    }
+    return false;
+
+
+}
 }
