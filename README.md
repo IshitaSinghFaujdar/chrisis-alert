@@ -22,8 +22,10 @@ Ensure you have the following installed:
    git clone https://github.com/IshitaSinghFaujdar/chrisis-alert.git
    
 #on windows
-   for compiling: ```javac Main.java ```
-   for running: ```java -cp ".;lib/mysql-connector-j-9.1.0.jar" Main```
+   for compiling:
+   ```javac Main.java ```
+   for running:
+   ```java -cp ".;lib/mysql-connector-j-9.1.0.jar" Main```
    There is a JAR file in library folder, ensure you have it with you.
 
    #on linux
@@ -34,14 +36,16 @@ Ensure you have the following installed:
 
 
    Add a **db_config.properties** file and enter your credentials for mySQL like this.
-    ```db.url=jdbc:mysql://localhost:3306/chrisis_users
+    ```
+       db.url=jdbc:mysql://localhost:3306/chrisis_users
        db.username=root
-       db.password=sample@1234```
+       db.password=sample@1234
+       ```
 
    Create a database in your MYSQL
-    ```CREATE DATABASE chrisis_users```
-    ```USE chrisis_users;```
-    ```CREATE TABLE users (
+    ```CREATE DATABASE chrisis_users;
+    USE chrisis_users;
+    CREATE TABLE users (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -49,8 +53,8 @@ Ensure you have the following installed:
     security_question VARCHAR(255) NOT NULL,
     security_answer VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );```
-    ```CREATE TABLE tickets (
+    );
+    CREATE TABLE tickets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     username VARCHAR(255),
